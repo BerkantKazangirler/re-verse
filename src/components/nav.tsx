@@ -8,7 +8,7 @@ import {
   Radio,
   Shield,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Nav = () => {
   const [brodcast, setBroadcast] = useState<"VALI" | "AFAD" | "ALL">("VALI");
@@ -17,15 +17,24 @@ export const Nav = () => {
   const [selectedDepartment, setSelectedDepartment] = useState<
     "VALI" | "AFAD" | "MEDIC"
   >("VALI");
+  const [time, setTime] = useState<string>(new Date().toLocaleTimeString());
   const [departmentsDropdown, setDepartmentsDropdown] =
     useState<boolean>(false);
+
+  useEffect(() => {
+    setTime(new Date().toLocaleTimeString());
+    const interval = setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex lfex-row bg-[#080B12]/95 border-b border-white/5 p-4">
       <div className="flex flex-row w-full justify-between">
         <div className="flex flex-row gap-5">
           <div className="flex flex-row gap-2">
-            <div className="bg-theme-primary rounded-full w-1 h-full"></div>
+            <div className="bg-theme-primary rounded-full w-1 min-h-8"></div>
             <span className="text-[#F1F5F9] my-auto font-semibold text-sm">
               Interactive Map
             </span>
@@ -33,7 +42,7 @@ export const Nav = () => {
           <div className="flex flex-row gap-3 font-cousine">
             <div className="flex flex-row h-fit my-auto gap-1.5 text-[#94A3B8] px-3 py-1.5 bg-white/5 rounded-1.5xl border border-white border-opacity-[0.08]">
               <Clock className="size-3 my-auto" />
-              <span className="text-xs my-auto">00:48:03</span>
+              <span className="text-xs my-auto">{time}</span>
             </div>
             <div className="flex flex-row gap-1.5 h-fit my-auto text-[#FDA4AF] px-3 py-1.5 bg-theme-primary/10 rounded-1.5xl border border-theme-primary border-opacity-25">
               <div className="size-1.5 my-auto rounded-full bg-theme-primary animate-pulse"></div>
@@ -183,7 +192,7 @@ export const Nav = () => {
             <div
               className={`bg-[#080B12] border transition-all items-center w-44 duration-500 ease-in-out rounded-[14px] flex flex-col absolute left-1/2 -translate-x-1/2 mt-1 drop-shadow-lg overflow-hidden ${departmentsDropdown ? "h-[8.5rem] border-white/10" : "h-0 border-transparent"}`}
             >
-              <div
+              <button
                 onClick={() => setSelectedDepartment("VALI")}
                 className={classNames(
                   "transition-all rounded-t-[14px] w-full p-2 flex flex-row gap-2.5",
@@ -196,7 +205,7 @@ export const Nav = () => {
                   <Shield className="size-3" />
                 </div>
                 <div className="flex flex-col my-auto">
-                  <span className="text-[#E2E8F0] leading-3 font-bold text-2xs">
+                  <span className="text-[#E2E8F0] text-start leading-3 font-bold text-2xs">
                     Vali Command
                   </span>
                   <p className="text-[#475569] leading-3 font-medium text-2xs">
@@ -206,8 +215,8 @@ export const Nav = () => {
                 {selectedDepartment === "VALI" && (
                   <Circle className="fill-theme-primary size-1.5 self-center absolute right-2" />
                 )}
-              </div>
-              <div
+              </button>
+              <button
                 onClick={() => setSelectedDepartment("AFAD")}
                 className={classNames(
                   "p-2 transition-all w-full flex flex-row gap-2.5",
@@ -220,7 +229,7 @@ export const Nav = () => {
                   <Shield className="size-3" />
                 </div>
                 <div className="flex flex-col my-auto">
-                  <span className="text-[#E2E8F0] leading-3 font-bold text-2xs">
+                  <span className="text-[#E2E8F0] text-start leading-3 font-bold text-2xs">
                     AFAD HQ
                   </span>
                   <p className="text-[#475569] leading-3 font-medium text-2xs">
@@ -230,8 +239,8 @@ export const Nav = () => {
                 {selectedDepartment === "AFAD" && (
                   <Circle className="fill-afad-primary size-1.5 self-center absolute right-2" />
                 )}
-              </div>
-              <div
+              </button>
+              <button
                 onClick={() => setSelectedDepartment("MEDIC")}
                 className={classNames(
                   "p-2 transition-all w-full flex flex-row gap-2.5",
@@ -244,7 +253,7 @@ export const Nav = () => {
                   <Shield className="size-3" />
                 </div>
                 <div className="flex flex-col my-auto">
-                  <span className="text-[#E2E8F0] leading-3 font-bold text-2xs">
+                  <span className="text-[#E2E8F0] text-start leading-3 font-bold text-2xs">
                     Medical Lead
                   </span>
                   <p className="text-[#475569] leading-3 font-medium text-2xs">
@@ -254,7 +263,7 @@ export const Nav = () => {
                 {selectedDepartment === "MEDIC" && (
                   <Circle className="fill-medic-primary size-1.5 self-center absolute right-2" />
                 )}
-              </div>
+              </button>
             </div>
           </div>
         </div>
