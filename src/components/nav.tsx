@@ -1,3 +1,4 @@
+import { useDataContext } from "@/contexts";
 import classNames from "classnames";
 import {
   Battery,
@@ -8,9 +9,13 @@ import {
   Radio,
   Shield,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 export const Nav = () => {
+  const { activeTab, dashboardTabs } = useDataContext();
+  const activeTabText =
+    dashboardTabs.find((t) => t.id === activeTab)?.text ?? "";
   const [brodcast, setBroadcast] = useState<"VALI" | "AFAD" | "ALL">("VALI");
   const [broadcastStatus, setBroadcastStatus] = useState<boolean>(false);
   const [saverMode, setSaverMode] = useState<boolean>(true);
@@ -35,9 +40,18 @@ export const Nav = () => {
         <div className="flex flex-row gap-5">
           <div className="flex flex-row gap-2">
             <div className="bg-theme-primary rounded-full w-1 min-h-8"></div>
-            <span className="text-[#F1F5F9] my-auto font-semibold text-sm">
-              Interactive Map
-            </span>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={activeTabText}
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 6 }}
+                transition={{ duration: 0.18, ease: "easeInOut" }}
+                className="text-[#F1F5F9] min-w-28 my-auto font-semibold text-sm"
+              >
+                {activeTabText}
+              </motion.span>
+            </AnimatePresence>
           </div>
           <div className="flex flex-row gap-3 font-cousine">
             <div className="flex flex-row h-fit my-auto gap-1.5 text-[#94A3B8] px-3 py-1.5 bg-white/5 rounded-1.5xl border border-white border-opacity-[0.08]">

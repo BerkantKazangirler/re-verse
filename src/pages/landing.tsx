@@ -248,12 +248,12 @@ export function LuxuryLanding() {
             {[
               {
                 name: "Berkant Kazangirler",
-                role: "Lead Systems Architect",
+                role: "Project Lead",
                 img: "team/bk.webp",
               },
               {
                 name: "Songül Duran",
-                role: "Hardware Specialist",
+                role: "Developer",
                 img: "team/sd.webp",
               },
               // {
