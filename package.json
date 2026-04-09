@@ -15,6 +15,7 @@
     "@studio-freight/lenis": "^1.0.42",
     "classnames": "^2.5.1",
     "lucide-react": "^0.577.0",
+    "mapbox-gl": "^3.21.0",
     "motion": "^12.38.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
